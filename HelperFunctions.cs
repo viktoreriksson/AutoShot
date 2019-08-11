@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace AutoShot {
     class HelperFunctions {
@@ -21,11 +23,14 @@ namespace AutoShot {
         }
 
         public static void TakeScreenshot(string path, long screenshotquality) {
-            Bitmap bitmap = new Bitmap(Screen.PrimaryScreen.Bounds.Width,
-                Screen.PrimaryScreen.Bounds.Height);
+            Rectangle screenBounds = SystemInformation.VirtualScreen;
+            Bitmap bitmap = new Bitmap(screenBounds.Width,
+                screenBounds.Height);
 
             Graphics image = Graphics.FromImage(bitmap);
-            image.CopyFromScreen(0, 0, 0, 0, bitmap.Size);
+            image.CopyFromScreen(screenBounds.X, screenBounds.Y, 
+                0, 0, 
+                bitmap.Size);
 
             EncoderParameters encoder = new EncoderParameters();
             encoder.Param[0] = new EncoderParameter(Encoder.Quality, screenshotquality);
