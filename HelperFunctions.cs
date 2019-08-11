@@ -41,6 +41,10 @@ namespace AutoShot {
                 return;
             }
             bitmap.Save(path, jpegCodec, encoder);
+
+
+            bitmap.Dispose();
+            image.Dispose();
         }
 
         public static ImageCodecInfo GetImageFormat(ImageFormat imageFormat) {
